@@ -249,3 +249,48 @@ platformTabs.forEach((button, index) => {
     selectPlatformTab(platformTabs[nextIndex]);
   });
 });
+
+const audienceGrid = document.querySelector(".audience-grid");
+const audienceHoverEnabled = window.matchMedia("(hover: hover) and (min-width: 601px)");
+const audiencePanels = [...(audienceGrid?.querySelectorAll(".solution-panel") ?? [])];
+
+const focusAudiencePanel = (activePanel) => {
+  audienceGrid.dataset.focusedPanel = activePanel.id;
+  audiencePanels.forEach((panel) => {
+    const art = panel.querySelector(".solution-art");
+    const active = panel === activePanel;
+    art.style.opacity = active ? "1" : "0.34";
+    art.style.filter = active ? "saturate(1)" : "saturate(0.7)";
+  });
+};
+
+const clearAudiencePanelFocus = (panel) => {
+  if (audienceGrid.dataset.focusedPanel !== panel.id) return;
+
+  delete audienceGrid.dataset.focusedPanel;
+  audiencePanels.forEach((item) => {
+    const art = item.querySelector(".solution-art");
+    art.style.removeProperty("opacity");
+    art.style.removeProperty("filter");
+  });
+};
+
+audiencePanels.forEach((panel) => {
+  panel.addEventListener("pointerenter", (event) => {
+    if (event.pointerType === "mouse" && audienceHoverEnabled.matches) {
+      focusAudiencePanel(panel);
+    }
+  });
+
+  panel.addEventListener("pointerleave", (event) => {
+    if (event.pointerType === "mouse") clearAudiencePanelFocus(panel);
+  });
+
+  panel.addEventListener("focusin", () => {
+    if (audienceHoverEnabled.matches) focusAudiencePanel(panel);
+  });
+
+  panel.addEventListener("focusout", (event) => {
+    if (!panel.contains(event.relatedTarget)) clearAudiencePanelFocus(panel);
+  });
+});
