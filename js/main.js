@@ -1,0 +1,168 @@
+const nav = document.querySelector(".nav");
+const toggle = document.querySelector(".menu-toggle");
+const modal = document.querySelector("#modal");
+const title = document.querySelector("#modal-title");
+const form = document.querySelector("#lead-form");
+const status = document.querySelector(".form-status");
+const modalIntro = document.querySelector(".modal-intro");
+const modalClose = document.querySelector(".modal-close");
+let lastModalTrigger = null;
+
+const closeModal = () => {
+  if (!modal) return;
+  modal.hidden = true;
+  lastModalTrigger?.focus();
+};
+
+toggle?.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", String(open));
+});
+
+const menuButtons = [...document.querySelectorAll(".menu > button[aria-expanded]")];
+const desktopHover = window.matchMedia("(hover: hover) and (min-width: 901px)");
+
+const closeOtherMenus = (activeButton) => {
+  menuButtons.forEach((otherButton) => {
+    if (otherButton !== activeButton) {
+      otherButton.setAttribute("aria-expanded", "false");
+      otherButton.parentElement.classList.remove("open");
+    }
+  });
+};
+
+menuButtons.forEach((button) => {
+  const menu = button.parentElement;
+
+  button.addEventListener("click", () => {
+    const open = desktopHover.matches || button.getAttribute("aria-expanded") !== "true";
+    closeOtherMenus(button);
+
+    button.setAttribute("aria-expanded", String(open));
+    menu.classList.toggle("open", open);
+  });
+
+  menu.addEventListener("pointerenter", (event) => {
+    if (event.pointerType !== "mouse" || !desktopHover.matches) return;
+
+    closeOtherMenus(button);
+    button.setAttribute("aria-expanded", "true");
+    menu.classList.add("open");
+  });
+
+  menu.addEventListener("pointerleave", (event) => {
+    if (event.pointerType !== "mouse" || !desktopHover.matches) return;
+
+    button.setAttribute("aria-expanded", "false");
+    menu.classList.remove("open");
+  });
+});
+
+document.addEventListener("click", (event) => {
+  if (!(event.target instanceof Element) || event.target.closest(".menu")) return;
+
+  document.querySelectorAll(".menu.open").forEach((menu) => {
+    menu.classList.remove("open");
+    menu.querySelector(":scope > button[aria-expanded]")?.setAttribute("aria-expanded", "false");
+  });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+
+  document.querySelectorAll(".menu.open").forEach((menu) => {
+    menu.classList.remove("open");
+    menu.querySelector(":scope > button[aria-expanded]")?.setAttribute("aria-expanded", "false");
+  });
+  closeModal();
+});
+
+document.querySelector(".banner-close")?.addEventListener("click", () => {
+  document.querySelector(".banner")?.remove();
+});
+
+document.querySelectorAll("[data-open-modal]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const mode = button.getAttribute("data-open-modal");
+    const modalCopy = {
+      demo: ["Talk to our team", "Share a little context and we will help you explore the right workflow.", "Send inquiry"],
+      login: ["Workspace sign-in", "Workspace accounts are not connected in this local preview.", "Continue in preview"],
+      admin: ["Admin access", "Admin access is not connected in this local preview.", "Continue in preview"],
+    }[mode] ?? ["Talk to our team", "Share a little context and we will help you explore the right workflow.", "Send inquiry"];
+
+    lastModalTrigger = button;
+    title.textContent = modalCopy[0];
+    modalIntro.textContent = modalCopy[1];
+    form.querySelector('[type="submit"]').textContent = modalCopy[2];
+    form.dataset.mode = mode;
+    status.textContent = "";
+    modal.hidden = false;
+    modalClose.focus();
+  });
+});
+
+modalClose?.addEventListener("click", closeModal);
+
+modal?.addEventListener("click", (event) => {
+  if (event.target === modal) closeModal();
+});
+
+form?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const mode = form.dataset.mode;
+  status.textContent = mode === "login"
+    ? "No workspace is connected to this preview. Nothing was sent."
+    : mode === "admin"
+      ? "Admin access is unavailable in this preview. Nothing was sent."
+      : "Thanks. Your inquiry is shown in this local demo only; nothing was sent.";
+  form.reset();
+});
+
+const previewContent = {
+  matter: {
+    title: "Meridian acquisition",
+    note: "A shared view of the people, documents, and open work for this matter.",
+  },
+  research: {
+    title: "Research desk",
+    note: "Collect source material and keep useful citations close to your analysis.",
+  },
+  documents: {
+    title: "Document library",
+    note: "Organize the working set and find details across related documents.",
+  },
+  contracts: {
+    title: "Contract review",
+    note: "Compare drafts and keep open language questions visible to reviewers.",
+  },
+};
+
+const previewTitle = document.querySelector("#preview-title");
+const dashboardNote = document.querySelector("#dashboard-note");
+const peerToggle = document.querySelector("#peer-toggle");
+
+document.querySelectorAll("[data-preview-view]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const view = button.dataset.previewView;
+    const content = previewContent[view];
+    previewTitle.textContent = content.title;
+    dashboardNote.textContent = content.note;
+
+    document.querySelectorAll("[data-preview-view]").forEach((otherButton) => {
+      const active = otherButton === button;
+      otherButton.classList.toggle("active", active);
+      otherButton.setAttribute("aria-pressed", String(active));
+    });
+  });
+});
+
+peerToggle?.addEventListener("change", () => {
+  document.querySelector(".dashboard").dataset.peerMode = peerToggle.checked ? "on" : "off";
+  dashboardNote.textContent = peerToggle.checked
+    ? "Comparison view is on. " + previewContent[document.querySelector("[data-preview-view].active").dataset.previewView].note
+    : "Comparison view is off. " + previewContent[document.querySelector("[data-preview-view].active").dataset.previewView].note;
+});
+
+document.querySelector("[data-ask-alder]")?.addEventListener("click", () => {
+  dashboardNote.textContent = "Alder can help trace a clause, compare drafts, or find context in this sample workspace. The assistant is not connected in this preview.";
+});
