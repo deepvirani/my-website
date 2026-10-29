@@ -166,3 +166,93 @@ peerToggle?.addEventListener("change", () => {
 document.querySelector("[data-ask-alder]")?.addEventListener("click", () => {
   dashboardNote.textContent = "Alder can help trace a clause, compare drafts, or find context in this sample workspace. The assistant is not connected in this preview.";
 });
+
+const platformFeatureContent = {
+  assistants: {
+    title: "Assistants",
+    description: "Move a defined task forward with source context and review built into the process.",
+    label: "MATTER ASSISTANT",
+    tag: "MERIDIAN / REVIEW",
+    document: "Change of control provisions",
+    note: "Three agreements use different notice periods. Review the cited passages before deciding on a position.",
+  },
+  spaces: {
+    title: "Shared spaces",
+    description: "Keep people, decisions, and working files connected around the matter they belong to.",
+    label: "SHARED MATTER",
+    tag: "ACME / CLIENT SPACE",
+    document: "Diligence room overview",
+    note: "The latest issue list and draft are available to the matter team in one shared space.",
+  },
+  vault: {
+    title: "Document library",
+    description: "Organize a working set and find useful details across related documents.",
+    label: "DOCUMENT LIBRARY",
+    tag: "MERIDIAN / DOCUMENTS",
+    document: "Search across 248 documents",
+    note: "Relevant passages are grouped by source so reviewers can open and verify the original text.",
+  },
+  contracts: {
+    title: "Contract review",
+    description: "Compare drafts, surface open language questions, and keep review decisions visible.",
+    label: "CONTRACT REVIEW",
+    tag: "AGREEMENT / REDLINE",
+    document: "Indemnity and liability terms",
+    note: "This draft changes the liability cap. Compare the marked language with your team's review notes.",
+  },
+  operations: {
+    title: "Practice overview",
+    description: "See how work is moving across teams and spot where an extra handoff may help.",
+    label: "PRACTICE OVERVIEW",
+    tag: "TEAM / ACTIVITY",
+    document: "Open work by practice group",
+    note: "Review workload and activity trends together before choosing where to focus next.",
+  },
+  research: {
+    title: "Research desk",
+    description: "Explore complex questions with useful sources and a clear trail back to them.",
+    label: "RESEARCH DESK",
+    tag: "RESEARCH / SOURCES",
+    document: "Authority and source notes",
+    note: "Each point links back to source material, giving the reviewer context to assess the analysis.",
+  },
+};
+
+const platformTabs = [...document.querySelectorAll("[data-platform-tab]")];
+const platformPreview = document.querySelector("#platform-preview");
+
+const selectPlatformTab = (button) => {
+  const feature = platformFeatureContent[button.dataset.platformTab];
+  if (!feature) return;
+
+  platformTabs.forEach((tab) => {
+    const selected = tab === button;
+    tab.classList.toggle("active", selected);
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+  });
+
+  platformPreview.setAttribute("aria-labelledby", button.id);
+  platformPreview.dataset.feature = button.dataset.platformTab;
+  document.querySelector("#platform-preview-title").textContent = feature.title;
+  document.querySelector("#platform-preview-description").textContent = feature.description;
+  document.querySelector("#product-window-label").textContent = feature.label;
+  document.querySelector("#product-document-tag").textContent = feature.tag;
+  document.querySelector("#product-document-title").textContent = feature.document;
+  document.querySelector("#product-assistant-note").textContent = feature.note;
+};
+
+platformTabs.forEach((button, index) => {
+  button.tabIndex = button.getAttribute("aria-selected") === "true" ? 0 : -1;
+  button.addEventListener("click", () => selectPlatformTab(button));
+  button.addEventListener("keydown", (event) => {
+    const directions = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+    const direction = directions[event.key];
+    if (direction === undefined) return;
+
+    event.preventDefault();
+    const nextIndex = (index + direction + platformTabs.length) % platformTabs.length;
+    platformTabs[nextIndex].focus();
+    selectPlatformTab(platformTabs[nextIndex]);
+  });
+});
