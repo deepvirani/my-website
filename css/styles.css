@@ -1543,7 +1543,7 @@ textarea {
 }
 
 .audience-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
   gap: 1rem;
 }
 
@@ -1582,6 +1582,9 @@ textarea {
   background-image: radial-gradient(rgba(255, 255, 255, 0.16) 0.7px, transparent 0.7px);
   background-size: 5px 5px;
   color: #f8f6f1;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .audience-grid > .solution-panel-inhouse {
@@ -2103,10 +2106,11 @@ textarea {
 
 @media (max-width: 600px) {
   .audience-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
   .solution-panel {
+    flex: none;
     min-height: 0;
     padding: 1.4rem;
   }
