@@ -259,6 +259,8 @@ const focusAudiencePanel = (activePanel) => {
   audiencePanels.forEach((panel) => {
     const art = panel.querySelector(".solution-art");
     const active = panel === activePanel;
+    panel.classList.toggle("is-focused", active);
+    panel.classList.toggle("is-dimmed", !active);
     panel.style.transform = active ? "scale(1.06)" : "scale(0.94)";
     art.style.opacity = active ? "1" : "0.34";
     art.style.filter = active ? "saturate(1)" : "saturate(0.7)";
@@ -271,6 +273,7 @@ const clearAudiencePanelFocus = (panel) => {
   delete audienceGrid.dataset.focusedPanel;
   audiencePanels.forEach((item) => {
     const art = item.querySelector(".solution-art");
+    item.classList.remove("is-focused", "is-dimmed");
     item.style.removeProperty("transform");
     art.style.removeProperty("opacity");
     art.style.removeProperty("filter");
