@@ -169,48 +169,42 @@ document.querySelector("[data-ask-alder]")?.addEventListener("click", () => {
 
 const platformFeatureContent = {
   assistants: {
-    title: "Assistants",
-    description: "Move a defined task forward with source context and review built into the process.",
-    label: "MATTER ASSISTANT",
+    title: "Agents",
+    label: "AGENT WORKFLOW",
     tag: "MERIDIAN / REVIEW",
     document: "Change of control provisions",
     note: "Three agreements use different notice periods. Review the cited passages before deciding on a position.",
   },
   spaces: {
-    title: "Shared spaces",
-    description: "Keep people, decisions, and working files connected around the matter they belong to.",
+    title: "Spaces",
     label: "SHARED MATTER",
     tag: "ACME / CLIENT SPACE",
     document: "Diligence room overview",
     note: "The latest issue list and draft are available to the matter team in one shared space.",
   },
   vault: {
-    title: "Document library",
-    description: "Organize a working set and find useful details across related documents.",
+    title: "Vault",
     label: "DOCUMENT LIBRARY",
     tag: "MERIDIAN / DOCUMENTS",
     document: "Search across 248 documents",
     note: "Relevant passages are grouped by source so reviewers can open and verify the original text.",
   },
   contracts: {
-    title: "Contract review",
-    description: "Compare drafts, surface open language questions, and keep review decisions visible.",
+    title: "Contract Intelligence",
     label: "CONTRACT REVIEW",
     tag: "AGREEMENT / REDLINE",
     document: "Indemnity and liability terms",
     note: "This draft changes the liability cap. Compare the marked language with your team's review notes.",
   },
   operations: {
-    title: "Practice overview",
-    description: "See how work is moving across teams and spot where an extra handoff may help.",
+    title: "Command Center",
     label: "PRACTICE OVERVIEW",
     tag: "TEAM / ACTIVITY",
     document: "Open work by practice group",
     note: "Review workload and activity trends together before choosing where to focus next.",
   },
   research: {
-    title: "Research desk",
-    description: "Explore complex questions with useful sources and a clear trail back to them.",
+    title: "Research",
     label: "RESEARCH DESK",
     tag: "RESEARCH / SOURCES",
     document: "Authority and source notes",
@@ -228,14 +222,13 @@ const selectPlatformTab = (button) => {
   platformTabs.forEach((tab) => {
     const selected = tab === button;
     tab.classList.toggle("active", selected);
+    tab.parentElement.classList.toggle("active", selected);
     tab.setAttribute("aria-selected", String(selected));
     tab.tabIndex = selected ? 0 : -1;
   });
 
   platformPreview.setAttribute("aria-labelledby", button.id);
   platformPreview.dataset.feature = button.dataset.platformTab;
-  document.querySelector("#platform-preview-title").textContent = feature.title;
-  document.querySelector("#platform-preview-description").textContent = feature.description;
   document.querySelector("#product-window-label").textContent = feature.label;
   document.querySelector("#product-document-tag").textContent = feature.tag;
   document.querySelector("#product-document-title").textContent = feature.document;

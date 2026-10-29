@@ -128,25 +128,49 @@
               </div>
             </header>
             <p class="dash-note" id="dashboard-note" aria-live="polite">A shared view of the people, documents, and open work for this matter.</p>
+            <div class="dash-alert"><b>A</b><span>7 suggested follow-ups are ready for review</span><a href="#demo">View items <span aria-hidden="true">↗</span></a></div>
             <div class="dash-grid">
-              <article class="card">
+              <article class="card adoption-card">
                 <div class="card-meta">
-                  <span>Documents in workspace</span>
-                  <strong>248</strong>
-                  <em>Organized</em>
+                  <span>Workspace adoption</span>
+                  <strong>72%</strong>
+                  <em>+6% this month</em>
                 </div>
-                <svg class="chart" viewBox="0 0 320 120" role="img" aria-label="Illustrative matter activity over time">
+                <svg class="chart" viewBox="0 0 320 120" role="img" aria-label="Illustrative workspace adoption over time">
                   <path d="M4 98H316M4 62H316M4 26H316" stroke="#e9e6df" stroke-width="1" />
                   <polyline fill="none" stroke="#9a4f3f" stroke-width="3" points="4,92 28,82 52,87 76,66 100,72 124,53 148,62 172,42 196,48 220,29 244,38 268,20 292,27 316,11" />
                 </svg>
-                <div class="chart-caption"><span>Activity</span><span>Last 30 days</span></div>
+                <div class="chart-caption"><span>Adoption trend</span><span>Past 6 months</span></div>
+              </article>
+              <article class="card usage-card">
+                <div class="card-meta"><span>Product usage</span><strong>Weekly activity</strong></div>
+                <div class="usage-chart" role="img" aria-label="Illustrative use across research, drafting, contracts, matters, and review">
+                  <div class="usage-column"><i style="--usage:78%"></i><i class="usage-peer" style="--usage:91%"></i><span>Research</span></div>
+                  <div class="usage-column"><i style="--usage:61%"></i><i class="usage-peer" style="--usage:43%"></i><span>Drafting</span></div>
+                  <div class="usage-column"><i style="--usage:49%"></i><i class="usage-peer" style="--usage:55%"></i><span>Contracts</span></div>
+                  <div class="usage-column"><i style="--usage:37%"></i><i class="usage-peer" style="--usage:29%"></i><span>Matters</span></div>
+                  <div class="usage-column"><i style="--usage:30%"></i><i class="usage-peer" style="--usage:44%"></i><span>Review</span></div>
+                </div>
+                <div class="chart-caption"><span><i class="legend-mark"></i>Your workspace</span><span><i class="legend-mark peer-mark"></i>Peer range</span></div>
+              </article>
+              <article class="card active-card">
+                <div class="card-meta">
+                  <span>Active users</span>
+                  <strong>305</strong>
+                  <em>+10%</em>
+                </div>
+                <svg class="chart" viewBox="0 0 320 120" role="img" aria-label="Illustrative active users trend">
+                  <path d="M4 98H316M4 62H316M4 26H316" stroke="#e9e6df" stroke-width="1" />
+                  <polyline fill="none" stroke="#746e67" stroke-width="3" points="4,101 28,96 52,89 76,91 100,72 124,68 148,61 172,48 196,52 220,35 244,31 268,23 292,19 316,10" />
+                </svg>
+                <div class="chart-caption"><span>People active in Alder</span><span>This month</span></div>
               </article>
               <article class="card task-card">
-                <div class="card-meta"><span>Open review items</span><strong>Today</strong></div>
+                <div class="card-meta"><span>Most active teams</span><strong>Last 30 days</strong></div>
                 <ul class="ranks">
-                  <li><span><i class="task-dot urgent"></i>Confirm notice period</span><b>Clause 8.2</b></li>
-                  <li><span><i class="task-dot review"></i>Check change-of-control</span><b>Clause 4.1</b></li>
-                  <li><span><i class="task-dot ready"></i>Compare two drafts</span><b>2 versions</b></li>
+                  <li><span><i class="task-dot urgent"></i>Research &amp; insights</span><b>42 sessions</b></li>
+                  <li><span><i class="task-dot review"></i>Commercial</span><b>36 sessions</b></li>
+                  <li><span><i class="task-dot ready"></i>Corporate</span><b>29 sessions</b></li>
                 </ul>
               </article>
             </div>
@@ -210,29 +234,56 @@
         <p class="lede">Move between the tools your team uses every day. Each view keeps the matter, its sources, and its next steps close at hand.</p>
         <div class="platform-layout">
           <div class="platform-tabs" role="tablist" aria-label="Alder platform features">
-            <button type="button" class="platform-tab active" id="agents" role="tab" aria-selected="true" aria-controls="platform-preview" data-platform-tab="assistants"><span>01</span>Assistants</button>
-            <button type="button" class="platform-tab" id="spaces" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="spaces"><span>02</span>Shared spaces</button>
-            <button type="button" class="platform-tab" id="vault" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="vault"><span>03</span>Document library</button>
-            <button type="button" class="platform-tab" id="contracts" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="contracts"><span>04</span>Contract review</button>
-            <button type="button" class="platform-tab" id="operations" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="operations"><span>05</span>Practice overview</button>
-            <button type="button" class="platform-tab" id="knowledge" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="research"><span>06</span>Research desk</button>
-          </div>
-          <article class="platform-preview" id="platform-preview" role="tabpanel" aria-labelledby="tab-assistants" data-feature="assistants">
-            <div class="platform-preview-copy">
-              <h3 id="platform-preview-title">Assistants</h3>
-              <p id="platform-preview-description">Move a defined task forward with source context and review built into the process.</p>
-              <a class="text-link" href="#demo">Explore a workflow <span aria-hidden="true">↗</span></a>
+            <div class="platform-tab-item active">
+              <button type="button" class="platform-tab" id="agents" role="tab" aria-selected="true" aria-controls="platform-preview" data-platform-tab="assistants">Agents</button>
+              <div class="platform-tab-detail"><p>Delegate defined work, follow progress, and inspect sources before your team approves the result.</p><a href="#demo">Learn more</a></div>
             </div>
+            <div class="platform-tab-item">
+              <button type="button" class="platform-tab" id="spaces" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="spaces">Spaces</button>
+              <div class="platform-tab-detail"><p>Keep matter context, documents, and collaborators together with clear access boundaries.</p><a href="#firms">Learn more</a></div>
+            </div>
+            <div class="platform-tab-item">
+              <button type="button" class="platform-tab" id="vault" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="vault">Vault</button>
+              <div class="platform-tab-detail"><p>Collect large document sets, then find the passages and patterns relevant to the question.</p><a href="#demo">Learn more</a></div>
+            </div>
+            <div class="platform-tab-item">
+              <button type="button" class="platform-tab" id="contracts" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="contracts">Contract Intelligence</button>
+              <div class="platform-tab-detail"><p>Compare drafts and review important language across agreements.</p><a href="#in-house">Learn more</a></div>
+            </div>
+            <div class="platform-tab-item">
+              <button type="button" class="platform-tab" id="operations" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="operations">Command Center</button>
+              <div class="platform-tab-detail"><p>See adoption and open-work trends across teams and practice groups.</p><a href="#customers">Learn more</a></div>
+            </div>
+            <div class="platform-tab-item">
+              <button type="button" class="platform-tab" id="knowledge" role="tab" aria-selected="false" aria-controls="platform-preview" data-platform-tab="research">Research</button>
+              <div class="platform-tab-detail"><p>Work through complex questions with evidence linked to source materials.</p><a href="#research">Learn more</a></div>
+            </div>
+          </div>
+          <article class="platform-preview" id="platform-preview" role="tabpanel" aria-labelledby="agents" data-feature="assistants">
             <div class="product-window" aria-label="Illustrative Alder workspace interface">
               <div class="product-window-bar"><span></span><span></span><span></span><b id="product-window-label">MATTER ASSISTANT</b></div>
               <div class="product-window-body">
                 <div class="product-window-nav"><b>A</b><i></i><i></i><i></i><i></i></div>
-                <div class="product-window-content">
-                  <div class="document-title"><span id="product-document-tag">MERIDIAN / REVIEW</span><b id="product-document-title">Change of control provisions</b></div>
+                <main class="product-window-content">
+                  <div class="workspace-header"><span id="product-document-tag">MERIDIAN / REVIEW</span><button type="button" aria-label="Share sample workspace">Share</button></div>
+                  <h3 id="product-document-title">Change of control provisions</h3>
+                  <p class="workspace-prompt">Review the related clauses and identify language that may need a closer look.</p>
                   <div class="document-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div>
                   <div class="assistant-note"><span>ALDER NOTE</span><p id="product-assistant-note">Three agreements use different notice periods. Review the cited passages before deciding on a position.</p><b>Sources · 4 documents</b></div>
-                  <div class="document-lines short"><i></i><i></i><i></i></div>
-                </div>
+                  <div class="workspace-files"><span><i></i>Term sheet · rev 3.docx</span><span><i></i>Open issues.pdf</span><span><i></i>Board consent.docx</span></div>
+                </main>
+                <aside class="workflow-progress" aria-label="Sample workflow progress">
+                  <div class="progress-heading"><span>Progress</span><b>3 of 5</b></div>
+                  <ol>
+                    <li class="complete"><i></i><span>Collect positions from the matter files</span></li>
+                    <li class="complete"><i></i><span>Locate the related clauses</span></li>
+                    <li class="current"><i></i><span>Compare language against review notes</span></li>
+                    <li><i></i><span>Flag differences for attorney review</span></li>
+                    <li><i></i><span>Prepare a source-linked summary</span></li>
+                  </ol>
+                  <p class="outputs-label">Outputs</p>
+                  <ul class="output-list"><li>Clause comparison.docx</li><li>Issue summary.pdf</li><li>Source index.xlsx</li></ul>
+                </aside>
               </div>
             </div>
           </article>
